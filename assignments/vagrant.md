@@ -3,6 +3,7 @@ September 3rd, 2017
 
 Availability: Sunday, 4pm - 11pm,
 Every other day from 6pm - 11pm
-http://88bd4156.ngrok.io
+http://c7cfed72.ngrok.io
+
 
 

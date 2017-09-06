@@ -6,5 +6,5 @@ if ! [ -L /var/www/html ]; then
   ln -fs /vagrant /var/www/html
 fi
 
-apt-get install -y php5
-apt-get install -y php5-mysql
+apt-get install -y php5	php5-mysql mysql-server
+apt-get -f -y install
