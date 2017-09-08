@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/legen/Documents/GitHub/FullStack-Browne/assignments/vagrant_getting_started","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"C:/Users/legen/Documents/GitHub/FullStack-Browne/assignments/vagrant_getting_started/code","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/legen/Documents/GitHub/FullStack-Browne/assignments/vagrant_getting_started","disabled":false,"__vagrantfile":true}}}

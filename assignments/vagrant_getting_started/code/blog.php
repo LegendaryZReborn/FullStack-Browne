@@ -1,11 +1,20 @@
+<?php
+
+	session_start();
+		
+	if(!isset($_SESSION["admin_login"]))
+	{
+		header("Location: admin_logpage.html");
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
-<head>
+<head>		
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Cavaughn's Personal</title>
-	
-	
+	<title>Cavaughn's Personal</title>	
 </head>
 <body>
 
