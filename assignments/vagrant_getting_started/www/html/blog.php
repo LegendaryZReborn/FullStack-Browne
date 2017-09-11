@@ -1,8 +1,18 @@
 <?php
 
 	session_start();
-		
-	if(!isset($_SESSION["admin_login"]))
+	$timeout = 10 * 60;
+	if(isset($_SESSION["admin_login"]))
+	{
+		if(time() > $_SESSION["last_time"] + $timeout)
+		{
+			session_unset();
+			session_destroy();
+
+			header("Location: admin_logpage.html");
+		}
+	}
+	else
 	{
 		header("Location: admin_logpage.html");
 	}
@@ -46,11 +56,18 @@
 				for($j = 0; $j < $rows; ++$j)
 				{
 					echo <<<_HTML
-					<h2 style="margin:0px; margin-top: 50px; padding:0px">{$retrievedPosts[$j]->getPostTitle()}</h2>
-					<i style="font-size:16px; margin-right:30px;">{$retrievedPosts[$j]->getPostDate()}</i>  
-					<strong style="font-size:16px;" >{$retrievedPosts[$j]->getPostAuthor()}</strong> <br />
-					
-					<p> {$retrievedPosts[$j]->getPostContent()} </p> <hr>
+					<div class="b_post">
+						<h2>{$retrievedPosts[$j]->getPostTitle()}</h2>
+						<i>{$retrievedPosts[$j]->getPostDate()}</i>  
+						<strong>{$retrievedPosts[$j]->getPostAuthor()}</strong> <br />
+						
+						<p> {$retrievedPosts[$j]->getPostContent()} </p> 
+
+						<form method='post' action='delete_posts.php'>
+							<input type='hidden' name='id' value='{$retrievedPosts[$j]->getPostID()}'>
+							<input type='submit' value='delete'>
+						</form>
+					</div>
 _HTML;
 				}
 		?>

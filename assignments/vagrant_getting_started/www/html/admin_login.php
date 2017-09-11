@@ -38,6 +38,7 @@
 			if($username == $row["username"] && $password == $row["password"])
 			{
 				$_SESSION["admin_login"] = $username;
+				$_SESSION["last_time"] = time();
 				header("Location: blog.php");
 			}	
 		}
