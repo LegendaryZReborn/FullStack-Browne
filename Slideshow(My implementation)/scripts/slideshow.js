@@ -1,26 +1,32 @@
-var slideIndex = 1;
-showSlides(slideIndex);
 
-function plusSlides(n) {
-showSlides(slideIndex += n);
+var num_slides = 5;
+var slide = 1;
+
+show_slide(slide);
+
+function show_slide(num)
+{
+  var img_name = "img ("+ num +").jpg"    
+  document.getElementById("img").src = "images/" + img_name;;
+  console.log( document.getElementById("img").src);
 }
 
-function currentSlide(n) {
-showSlides(slideIndex = n);
+function next_slide()
+{
+    slide = (slide + 1) % (num_slides + 1);
+
+    if(slide == 0)
+        slide++;
+
+    show_slide(slide);
 }
 
-function showSlides(n) {
-var i;
-var slides = document.getElementsByClassName("mySlides");
-var dots = document.getElementsByClassName("dot");
-if (n > slides.length) {slideIndex = 1} 
-if (n < 1) {slideIndex = slides.length}
-for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none"; 
-}
-for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-}
-slides[slideIndex-1].style.display = "block"; 
-dots[slideIndex-1].className += " active";
+function prev_slide()
+{
+    slide--;;
+
+    if(slide == 0)
+        slide = num_slides;
+
+    show_slide(slide);
 }
