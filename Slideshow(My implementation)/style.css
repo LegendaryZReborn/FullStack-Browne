@@ -41,7 +41,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: white;
-  background: black;
+  background: rgba(24, 25, 24, 0.70);
   padding: 10px;
   font-weight: bold;
 }
@@ -61,14 +61,46 @@
 {
   background: white;
   color: black;
+  cursor: pointer;
 }
 
 .dots
 {
-
+     width: 180px;
+     height: 40px;
+     margin: auto;
 }
 
 .dot
 {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    background: rgba(73, 75, 73, 0.8);
+    border-radius: 50%;
+}
 
+.dot:hover
+{
+  cursor: pointer;
+  background: rgba(19, 20, 19, 0.80);
+}
+
+.fade 
+{
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
 }
