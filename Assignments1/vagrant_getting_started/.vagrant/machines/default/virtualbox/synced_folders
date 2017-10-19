@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www":{"guestpath":"/var/www","hostpath":"C:/Users/legen/Documents/GitHub/FullStack-Browne/assignments/vagrant_getting_started/www","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/legen/Documents/GitHub/FullStack-Browne/assignments/vagrant_getting_started","disabled":false,"__vagrantfile":true}}}
