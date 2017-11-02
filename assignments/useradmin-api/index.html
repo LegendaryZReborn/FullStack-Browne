@@ -57,7 +57,7 @@
 
         function delete_users() {
             $.ajax({
-                url: "http://162.243.150.158/api.php/delete_user/",
+                url: "http://162.243.150.158/useradmin-api/api.php/delete_user/",
                 type: 'DELETE',
                 success: function(data) {
                     console.log(data);
@@ -70,7 +70,7 @@
 
         function get_users() {
             $.ajax({
-                url: "http://162.243.150.158/api.php/find_user",
+                url: "http://162.243.150.158/useradmin-api/api.php/find_user",
                 type: 'GET',
                 success: function(data) {
                     load_data_tables(data);

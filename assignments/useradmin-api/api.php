@@ -59,7 +59,7 @@ abstract class API
         
         $this->logger->do_log($this->args);
         
-        while ($this->args[0] == '' || $this->args[0] == 'api.php') {
+        while ($this->args[0] == '' || $this->args[0] == 'api.php'|| $this->args[0] == 'useradmin-api') {
             array_shift($this->args);
         }
         
