@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Where's Waldo?</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+
+    <!-- Custom styles for this template -->
+    <link href="./css/the-big-picture.css" rel="stylesheet">
+    <link href="./css/magnifier.css" rel="stylesheet">
+    <style>
+        body {
+            background: #ffa600;
+            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            height: 100%;
+        }
+
+        /* base game_board classes */
+
+        #game_board {
+            /* game_board dimension! */
+            height: 650px;
+
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 0px 0px;
+
+            /* additional background properties */
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            /* some box shadow for good fun */
+            box-shadow: rgba(0, 0, 0, 0.20) 0 10px 10px;
+
+            background: url('./game_images/crowd.png') no-repeat center center fixed;
+			background-size: contain;
+        }
+
+        /* cover */
+
+        #game_board.flex {
+            /* size matters */
+            background-size: cover;
+        }
+
+        /* contain */
+
+        #game_board.flex {
+            /* size matters */
+            background-size: contain;
+        }
+
+        /* flex, fun */
+
+        #game_board.flex {
+            /* size matters */
+            background-size: 100% auto;
+        }
+
+        .wrapper {
+            width: 800px;
+            margin: 30px auto;
+            color: black;
+            text-align: center;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 100;
+            font-size: 2.6em;
+            text-transform: uppercase;
+        }
+
+        #seconds,
+        #tens,
+        #mins {
+            font-size: 2em;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Where's Waldo</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a id="nav-start" href="#">Start Game</a>
+                    </li>
+                    <li>
+                        <a href="../navbar-static-top/">Static top</a>
+                    </li>
+                    <li class="active">
+                        <a href="./">Sign Up
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Something else here</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li>
+                                    <a href="#">Separated link</a>
+                                </li>
+                                <li>
+                                    <a href="#">One more separated link</a>
+                                </li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div id="game_board" class="">
+
+    </div>
+   <div class="wrapper">
+        <p>
+            <span id="mins">00</span>:
+            <span id="seconds">00</span>:
+            <span id="tens">00</span>
+        </p>
+        <button id="button-start">Start</button>
+        <button id="button-stop">Stop</button>
+        <button id="button-reset">Reset</button>
+    </div> 
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/Event.js"></script>
+    <script src="./js/Magnifier.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <script>
+	
+		var game_id = "";
+		function random_waldo_image() {
+				$.ajax({
+					url: "http://162.243.150.158/whereswaldo2/api/api.php/make_game_board",
+					type: 'GET',
+					success: function(data) {
+						console.log(data);
+						$('#game_board').css("background", "url('./game_images/" + data['game_id'] + ".png') no-repeat center center fixed");
+						$('#game_board').css("background-size", "contain");
+						game_id = data['game_id'];
+					},
+					data: []
+				});
+				
+			}
+		
+		function find_distance_from_waldo(data) {
+				$.ajax({
+					url: "http://162.243.150.158/whereswaldo2/api/api.php/find_distance_waldo",
+					type: 'GET',
+					data: data,
+					success: function(d) {
+						console.log(d);
+
+					},
+					
+				});
+			}
+			
+		function blur(elem,x){
+			var filterVal = 'blur('+x+'px)';
+
+				elem.css('filter', filterVal)
+				.css('webkitFilter', filterVal)
+				.css('mozFilter', filterVal)
+				.css('oFilter', filterVal)
+				.css('msFilter', filterVal);
+		}
+
+        window.onload = function () {
+            // var evt = new Event();
+            // var m = new Magnifier(evt);
+
+            // m.attach({
+            //     thumb: '#thumb',
+            //     large: 'http://griffincomplaints.xyz/waldo/images/1.jpg',
+            //     mode: 'inside',
+            //     zoom: 3,
+            //     zoomable: true
+            // });
+
+
+            /**
+    
+            https://stackoverflow.com/questions/6073505/what-is-the-difference-between-screenx-y-clientx-y-and-pagex-y
+    
+            pageX, pageY, screenX, screenY, clientX and clientY returns a number which
+            indicates the number of physical "css pixels" a point is from the reference
+            point. The event point is where the user clicked, the reference point is a 
+            point in the upper left. These properties return the horizontal and vertical 
+            distance from that reference point.
+    
+            pageX and pageY:
+            Relative to the top left of the fully rendered content area in the browser.
+            This reference point is below the url bar and back button in the upper left.
+            This point could be anywhere in the browser window and can actually change
+            location if there are embedded scrollable pages embedded within pages and
+            the user moves a scrollbar.
+    
+            screenX and screenY:
+            Relative to the top left of the physical screen/monitor, this reference point
+            only moves if you increase or decrease the number of monitors or the monitor
+            resolution.
+    
+            clientX and clientY:
+            Relative to the upper left edge of the content area (the viewport) of the 
+            browser window. This point does not move even if the user moves a scrollbar
+            from within the browser.
+    
+            viewport:
+            The viewport is the part of the webpage that the user can currently see. 
+            The scrollbars move the viewport to show other parts of the page.
+            */
+			
+			random_waldo_image()
+			
+			 blur($('#game_board'), 5);
+			 
+            $("#game_board").click(function (evt) {
+
+                originalW = 124;
+                originalH = 830;
+
+                dimensions = {
+                    offsetX: evt.offsetX,   //offsetX and offsetY are relative to the parent container,
+                    offsetY: evt.offsetY,
+                    screenX: evt.screenX,
+                    screenY: evt.screenY,
+                    clientX: evt.clientX,
+                    clientY: evt.clientY,
+                    pageX: evt.pageX,       //pageX and pageY are relative to the document.
+                    pageY: evt.pageY,
+                    windowHeight: $(window).height(),  // returns height of browser viewport
+                    windowWidth: $(window).width(),   // returns width of browser viewport
+                    documentHeight: $(document).height(), // returns height of HTML document (same as pageHeight in screenshot)
+                    documentWidth: $(document).width(), // returns width of HTML document
+                    screen_width: screen.width,
+                    screen_height: screen.height
+                }
+                if (typeof window.innerWidth != 'undefined') {
+                    dimensions.viewportwidth = window.innerWidth;
+                    dimensions.viewportheight = window.innerHeight;
+                }
+                height = $("#game_board").height();
+                width = $("#game_board").width();
+                console.log({ elementWidth: width, elementHeight: height });
+				console.log($(this).offset());
+				var gameboardD= getDimensions($(this));
+				console.log(gameboardD['width']);
+				
+				 var offset = $(this).offset();
+				var xMargin = ($(this).outerWidth() - $(this).width()) / 2;
+				var yMargin = ($(this).outerHeight() - $(this).height()) / 2;
+				
+				console.log(xMargin + " "  + yMargin);
+				console.log(offset);
+				var x = dimensions['clientX'] + xMargin - offset.left;
+				var y = dimensions['clientY'] + yMargin - offset.top;
+				
+				console.log(x + " " + y);
+				var clickX =  (dimensions['clientX'] - offset.left + xMargin)/dimensions['windowWidth'] * gameboardD['width'];
+				var clickY = (dimensions['clientY'] - offset.top + yMargin)/dimensions['windowHeight'] * gameboardD['height'];
+				
+				
+				var data = {
+					'click_x': clickX,
+					'click_y': clickY,
+					'game_id': game_id
+				}
+				console.log(dimensions);
+				console.log(data);
+				if(game_id != "")
+					find_distance_from_waldo(data);
+
+
+            });
+
+
+           /* $('#game_board').on('click', function () {
+                console.log(getDimensions($(this)));
+            });*/
+
+            var getDimensions = function (item) {
+                var img = new Image();			
+                img.src = item.css('background-image').replace(/url\(|\)$|"/ig, '');
+                return { width: img.width, height: img.height};
+            };
+
+            /*
+            * Stop Watch Code
+            */
+
+            var mins = 00;
+            var seconds = 00;
+            var tens = 00;
+            var appendTens = document.getElementById("tens")
+            var appendSeconds = document.getElementById("seconds")
+            var appendMins = document.getElementById("mins")
+            var buttonStart = document.getElementById('button-start');
+			var navStart = document.getElementById('nav-start');
+            var buttonStop = document.getElementById('button-stop');
+            var buttonReset = document.getElementById('button-reset');
+            var Interval;
+
+            buttonStart.onclick = function () {
+
+                clearInterval(Interval);
+                Interval = setInterval(startTimer, 10);
+				blur($('#game_board'), 0);
+            }
+		
+			navStart.onclick = function () {
+				clearInterval(Interval);
+                Interval = setInterval(startTimer, 10);
+				blur($('#game_board'), 0);
+			}
+
+            buttonStop.onclick = function () {
+                clearInterval(Interval);
+            }
+
+
+            buttonReset.onclick = function () {
+                clearInterval(Interval);
+                mins = "00";
+                tens = "00";
+                seconds = "00";
+                appendTens.innerHTML = tens;
+                appendSeconds.innerHTML = seconds;
+				blur($('#game_board'), 5);
+            }
+
+
+			
+
+            function startTimer() {
+                tens++;
+
+                if (tens < 9) {
+                    appendTens.innerHTML = "0" + tens;
+                }
+
+                if (tens > 9) {
+                    appendTens.innerHTML = tens;
+
+                }
+
+                if (tens > 99) {
+                    console.log("seconds");
+                    seconds++;
+                    appendSeconds.innerHTML = "0" + seconds;
+                    tens = 0;
+                    appendTens.innerHTML = "0" + 0;
+                }
+
+                if (seconds > 59) {
+                    mins++;
+                    appendMins.innerHTML = "0" + mins;
+                    seconds = 0;
+                    appendSeconds.innerHTML = "0" + 0;
+                }
+
+                if (seconds > 9) {
+                    appendSeconds.innerHTML = seconds;
+                }
+
+
+                if (mins < 9) {
+                    appendMins.innerHTML = "0" + mins;
+                }
+
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>

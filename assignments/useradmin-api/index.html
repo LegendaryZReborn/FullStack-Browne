@@ -7,12 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Api Test</title>
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link rel="icon" href="images/favicon.png">
+	
+    </style>
 </head>
 
 <body>
+
+
     <div>
         <table id="example" class="display" cellspacing="0" width="100%">
             <thead>
@@ -46,9 +51,167 @@
             </tfoot>
         </table>
     </div>
+	
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".add-user-form">Add User</button>
+
+	  <!-- Modal Add User form -->
+
+    <div class="container">
+        <div class="row">
+
+            <!-- Add User Modal-->
+            <div class="modal fade add-user-form" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                       <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add User</h4>
+					</div>
+                        <div class="modal-body.0">
+                               
+								<form action="/" onsubmit="event.preventDefault();">
+									<div class="form-group">
+										<label for="first_name">First Name:</label>
+										<input type="text" class="form-control" id="first_name" placeholder="Enter your first name" name="first">
+									</div>
+									<div class="form-group">
+										<label for="last_name">Last Name:</label>
+										<input type="text" class="form-control" id="last_name" placeholder="Enter your last name" name="last">
+									</div>
+									 <div class="form-group">
+										<label for="newphone">Phone:</label>
+										<input type="text" class="form-control" id="newphone" placeholder="Enter phone number" name="phone">
+									</div>
+									 <div class="form-group">
+										<label for="newnationality">Nationality:</label>
+										<input type="text" class="form-control" id="newnationality" placeholder="Enter nationality" name="nationality">
+									</div>
+									 <div class="form-group">
+										<label for="newlocation">Location:</label>
+										<input type="text" class="form-control" id="newlocation" placeholder="Enter location" name="location">
+									</div>
+									 <div class="form-group">
+										<label for="newdob">DOB:</label>
+										<input type="text" class="form-control" id="newdob" placeholder="Enter DOB" name="dob">
+									</div>
+									<div class="form-group">
+										<label for="newemail">Email:</label>
+										<input type="email" class="form-control" id="newemail" placeholder="Enter new email" name="email">
+									</div>
+									<div class="form-group">
+										<label for="newuser">Username:</label>
+										<input type="text" class="form-control" id="newuser" placeholder="New Username" name="username">
+									</div>
+									<div class="form-group">
+										<label for="newpwd">Password:</label>
+										<input type="password" class="form-control" id="newpwd" placeholder="New password" name="password">
+									</div>
+									
+									<!--<button type="submit" id="edit-user" class="btn btn-default">Edit User</button> -->
+
+								</form>
+
+                        </div>
+						 <div class="modal-footer">
+							<button type="submit" id="add-user" class="btn btn-default">Add User</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						  </div>
+                        <!--                                    <div class="modal-footer">-->
+                        <!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                        <!--                                    </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+		<!-- Edit User Modal -->
+	<div class="modal fade edit-user-form" role="dialog">
+	  <div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Edit User</h4>
+		  </div>
+		  <div class="modal-body">
+			    <form action="/" onsubmit="event.preventDefault();">
+					<div class="form-group">
+						<label for="efirst_name">First Name:</label>
+						<input type="text" class="form-control" id="efirst_name" placeholder="Enter your first name" name="first">
+					</div>
+					<div class="form-group">
+						<label for="elast_name">Last Name:</label>
+						<input type="text" class="form-control" id="elast_name" placeholder="Enter your last name" name="last">
+					</div>
+					 <div class="form-group">
+						<label for="enewphone">Phone:</label>
+						<input type="text" class="form-control" id="enewphone" placeholder="Enter phone number" name="phone">
+					</div>
+					 <div class="form-group">
+						<label for="enewnationality">Nationality:</label>
+						<input type="text" class="form-control" id="enewnationality" placeholder="Enter nationality" name="nationality">
+					</div>
+					 <div class="form-group">
+						<label for="enewlocation">Location:</label>
+						<input type="text" class="form-control" id="enewlocation" placeholder="Enter location" name="location">
+					</div>
+					 <div class="form-group">
+						<label for="enewdob">DOB:</label>
+						<input type="text" class="form-control" id="enewdob" placeholder="Enter DOB" name="dob">
+					</div>
+					<div class="form-group">
+						<label for="enewemail">Email:</label>
+						<input type="email" class="form-control" id="enewemail" placeholder="Enter new email" name="email">
+					</div>
+					<div class="form-group">
+						<label for="enewuser">Username:</label>
+						<input type="text" class="form-control" id="enewuser" placeholder="New Username" name="username">
+					</div>
+					<div class="form-group">
+						<label for="enewpwd">Password:</label>
+						<input type="password" class="form-control" id="enewpwd" placeholder="New password" name="password">
+					</div>
+				
+				</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="submit" id="edit-user" class="btn btn-default">Edit User</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+		<!-- END Modal For Editing User -->
+		
+			<!-- Delete confirmation  Modal -->
+	<div class="modal fade delete-confirmation-form" role="dialog">
+	  <div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Delete User</h4>
+		  </div>
+		  <div class="modal-body">
+				<p>Are you sure? This user will be deleted.</p>
+			    <button type="submit" id="delete-user" class="btn btn-default">Ok</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+		<!-- END Modal For Editing User -->
+  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="./js/popper.min.js"></script>    	
+    <script src="./js/bootstrap.min.js"></script>   
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
         //table.row( '#myRowId' ).data( myUpdateObjectOrArray );
         //table.draw();
@@ -79,6 +242,7 @@
             });
         }
 
+		var id = 0;
         function load_data_tables(data) {
             var filtered = [];
             var newobj = {
@@ -96,7 +260,7 @@
                     data[i].email,
                     data[i].username,
                     data[i].password,
-                    '<i class="fa fa-pencil-square-o edit_user" aria-hidden="true" data-id="' + data[i]['_id'] + '"></i> <i class="fa fa-trash delete_user" aria-hidden="true" data-id="' + data[i]['_id'] + '"></i>'
+                    '<i class="fa fa-pencil-square-o edit_user" data-toggle="modal" data-target=".edit-user-form" aria-hidden="true" data-id="' + data[i]['_id'] + '"></i> <i class="fa fa-trash delete_user" data-toggle="modal" data-target=".delete-confirmation-form" aria-hidden="true" data-id="' + data[i]['_id'] + '"></i>'
                 ];
                 newobj["data"].push(temp);
             }
@@ -110,7 +274,7 @@
                     $('#example tbody').on('click', 'tr', function() {
                         $(this).toggleClass('selected');
                         console.log(table.row(this).data());
-
+				
                     });
 
                 }
@@ -122,20 +286,138 @@
             });
 
         }
+		
+		 function my_request(method, url, data, successHandler, failureHandler) {
+			var jqxhr = $.ajax({
+				"async": true,
+				"crossDomain": true,
+				"url": url,
+				"type": method,
+				"data": data,
+				"success": function(data)
+				{
+					console.log(data + " got sent");
+				}
+			});
 
-        function add_admin_events() {
+			jqxhr.done(successHandler);
+			jqxhr.fail(failureHandler);
+		}
+		
+		 function add_admin_events() {
             $('.delete_user').click(function() {
                 var $this = $(this);
                 console.log($this);
                 console.log($this.data());
+				id = $this.data()["id"];
+				
+
             });
             $('.edit_user').click(function() {
                 var $this = $(this);
                 console.log($this);
                 console.log($this.data());
+				id = $this.data()["id"];
             });
+			
+			
         }
+		
+		function register_success(response) {
+				console.log(response);
+				location.reload();
+			}
 
+		function register_failure(response) {
+			console.log(response);
+
+		}
+			
+		$("#add-user").click(function () {
+			
+			 
+			var email = $('#newemail').val()
+			var userid = $('#newuser').val()
+			var pass = $('#newpwd').val()
+			var first_n = $('#first_name').val()
+			var last_n = $('#last_name').val()
+			var phone = $('#newphone').val()
+			var nationality = $('#newnationality').val()
+			var location = $('#newlocation').val()
+			var dob = $('#newdob').val()
+
+			console.log(location);
+			
+			var url = "http://162.243.150.158/useradmin-api/api.php/add_user"
+
+			var data = {
+				"first": first_n,
+				"last": last_n,
+				"phone": phone,
+				"nat": nationality,
+				"city": location,
+				"dob": dob,
+				"email": email,
+				"username": userid,
+				"password": pass
+			}
+
+			console.log(data);
+			my_request("POST", url, data, register_success, register_failure);
+			
+			});
+			
+			$("#edit-user").click(function () {
+			
+			var email = $('#enewemail').val()
+			var userid = $('#enewuser').val()
+			var pass = $('#enewpwd').val()
+			var first_n = $('#efirst_name').val()
+			var last_n = $('#elast_name').val()
+			var phone = $('#enewphone').val()
+			var nationality = $('#enewnationality').val()
+			var location = $('#enewlocation').val()
+			var dob = $('#enewdob').val()
+
+			console.log(location);
+			
+			var url = "http://162.243.150.158/useradmin-api/api.php/update_user"
+
+			console.log(id);
+			var data = {
+				"first": first_n,
+				"last": last_n,
+				"phone": phone,
+				"nat": nationality,
+				"city": location,
+				"dob": dob,
+				"email": email,
+				"username": userid,
+				"password": pass,
+				"_id": id
+				
+			}
+
+			
+			console.log(data);
+			my_request("POST", url, data, register_success, register_failure);
+			
+			});
+			
+			
+			$("#delete-user").click(function () {
+			
+			var url = "http://162.243.150.158/useradmin-api/api.php/delete_user"
+			
+			var data = {
+				"_id": id
+			}
+
+			console.log(data);
+			my_request("POST", url, data, register_success, register_failure);
+			
+			});
+			
         get_users();
     </script>
 </body>

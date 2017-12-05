@@ -178,7 +178,6 @@ class mongoHelper{
                 
                 //run the delete
                 $bulk->delete($doc);
-				
             }
         }else{
             $bulk->delete([]);
@@ -211,19 +210,10 @@ class mongoHelper{
      	$this->setDbcoll($coll);    //set collection
          
         $check = $this->query();	//run query
-		$size = sizeof($check) + 1;
-		$doc['_id'] = $size;
-		
-		$check = $this->query([$doc]);	
-		while(sizeof($check) > 0)
-		{
-			$size++;
-			$doc['_id'] = $size;
-			$check = $this->query($doc);
-		}
-        //total hack !!!!!
 
-        return $size;
+        // total hack !!!!!
+
+        return sizeof($check) + 1;
 
         // need to rewrite / test below
         if(sizeof($check) > 0){
@@ -276,7 +266,7 @@ class thelog{
 
 
 
-if($argv[1] == 'run_tests'){
+if($argv[1] == 'run_mongo_tests'){
     $products = [
         ["pid"=>1, "product_name"=>"Apple IPhone 6", "price"=>"$630", "category"=>"Mobile Phone" ],
         [ "pid"=>3, "product_name"=>"Samsung T.V", "price"=>"$900", "category"=>"Electronics"],
@@ -336,6 +326,7 @@ if($argv[1] == 'run_tests'){
 	$max = $mymongo->get_max_id('memes','users','uid');
 	print_r($max);
 }
+
 
 
 

@@ -5,7 +5,8 @@ error_reporting(1);
 //http://coreymaynard.com/blog/creating-a-restful-api-with-php/
 //https://programmerblog.net/php-mongodb-tutorial/
 
-require('mongo_helper.php');
+require('../scripts/image_helper.php');
+
 abstract class API
 {
     /**
@@ -59,7 +60,7 @@ abstract class API
         
         $this->logger->do_log($this->args);
         
-        while ($this->args[0] == '' || $this->args[0] == 'api.php'|| $this->args[0] == 'useradmin-api') {
+        while ($this->args[0] != 'api.php') {
             array_shift($this->args);
         }
         
@@ -146,48 +147,21 @@ class MyAPI extends API
     {
         parent::__construct();
         
-        $this->mdb = 'fake-business';
+        $this->mdb = 'waldo-game';
         $this->mh = new mongoHelper($this->mdb);
-        $this->primary_key = 'uid';
-        $this->mh->setDbcoll('users');
-        $this->temparray = [];
+        $this->mh->setDbcoll('backgrounds');
     }
 
 
-    /**
-     * Example of an Endpoint
-     */
-    protected function random_user()
-    {
-        $this->mh->setDbcoll('users');
-        $this->mh->delete();
-        $results = [];
-        if ($this->method == "GET") {
-            if ($this->request['size']) {
-                $size=$this->request['size'];
-            } else {
-                $size=100;
-            }
+    public function make_game_board(){
+        $args = $this->request;
+        return $args;
 
-            $data = file_get_contents("https://randomuser.me/api/?results={$size}&nat=us&exc=id");
-            if ($data) {
-                $data = json_decode($data, true);
-
-                foreach ($data['results'] as $user) {
-                    $this->temparray = [];
-                    $max_id = $this->mh->get_max_id($this->mdb, $this->mh->collection, '_id');
-                    $this->logger->do_log($max_id, "Max ID:");
-                    $user['_id'] = $max_id;
-                    $this->flatten_array($user);
-                    $this->logger->do_log($user, "flatten");
-                    $results[] = $this->mh->insert([$this->temparray]);
-                }
-            }
-        }
-        return $results;
     }
 
 
+
+    /////////////////////////////////////////////////////
     private function flatten_array($array){
         foreach($array as $key => $value){
             //If $value is an array.
@@ -200,127 +174,6 @@ class MyAPI extends API
             }
         }
     }
-
-
-    
-    /**
-     *add_user: adds a new user(s) to the collection
-     */
-    protected function add_user()
-    {
-		$this->mh->setDbcoll('users');
-		
-       if ($this->method == "POST") {
-		   
-			$max_id = $this->mh->get_max_id($this->mdb, $this->mh->collection, '_id');
-			$user = $this->request;
-			$user['_id'] = $max_id;
-			//return $user['_id'];
-			$results = $this->mh->insert([$user]);
-		   
-        } 
-		return $result;
-
-    }
-
-    /**
-     *update_user: updates a user(s) in the collection
-     */
-    protected function update_user()
-    {
-		$this->mh->setDbcoll('users');
-		if ($this->method == "POST") {
-          
-			$this->request['_id'] = (int)$this->request['_id'];
-			$_id = (int)$this->request['_id'];
-			
-			$doc['_id'] = $_id;
-
-			$results = $this->mh->update($doc, $this->request, null);
-			
-			return $results; 
-        }
-		
-    }
-
-    /**
-     *delete_user: removes a user(s) from the collection
-     */
-    protected function delete_user()
-    {
-		$this->mh->setDbcoll('users');
-		if ($this->method == "POST") {
-            if (count($this->request) > 0) {
-				$this->request['_id'] = (int)$this->request['_id'];
-                $result = $this->mh->delete([$this->request]);
-            } else {
-                $result = $this->mh->delete();
-            }
-            //return $result;
-        }
-		
-		return $this->request;
-    }
-
-
-    /**
-     *find_user: finds a user(s) from the collection
-     */
-    protected function find_user()
-    {
-        
-        $newstuff = [];
-        foreach($this->request as $key => $val){
-            $newstuff[$key] = $this->clean_entry($val);
-        }
-        return $this->mh->query($newstuff);
-        //return ["request"=>$newstuff,"method"=>$this->method];
-    }
-
-    private function clean_entry($entry){
-        return stripslashes(strip_tags(urldecode($entry)));
-    }
-
-
-    /**
-     *All things user.
-     */
-    protected function user()
-    {
-        $this->mh->setDbcoll('users');
-        if ($this->method == 'GET') {
-            $users = $this->mh->query($this->request);
-            return $users;
-        } elseif ($this->method == "POST") {
-            //not good implementation right now
-            if (array_key_exists('data', $this->request)) {
-                if (is_array($this->request['data'])) {
-                    $this->request = $this->request['data'];
-                    //had issues with "posting" so I'm debugging here
-                    if (!$this->has_string_keys($this->request)) {
-                        $this->logger->do_log(sizeof($this->request), "regular array");
-                        $this->request = $this->addPrimaryKey($this->request, $this->primary_key);
-                        $result = $this->mh->insert($this->request);
-                    } else {
-                        $this->logger->do_log(sizeof($this->request), "assoc array");
-                        $result = $this->mh->insert([$this->request]);
-                    }
-                }
-            } else {
-                $result = $this->mh->insert([$this->request]);
-            }
-            
-            return $result;
-        } elseif ($this->method == "DELETE") {
-            if (count($this->request) > 0) {
-                $result = $this->mh->delete([$this->request]);
-            } else {
-                $result = $this->mh->delete();
-            }
-            return $result;
-        }
-    }
-
 
     private function addPrimaryKey($data, $coll, $key)
     {
@@ -354,7 +207,6 @@ class MyAPI extends API
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
 }
-
 
 $api = new MyAPI();
 echo $api->processAPI();
