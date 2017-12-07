@@ -176,17 +176,16 @@ class MyAPI extends API
     
         list($base_width,$base_height,$null1,$null2) = getimagesize('/var/www/html/whereswaldo2/images/crowd.jpg');
         
-        $rx = rand(0,$base_width);
-        $ry = rand(0,$base_height);
+        $rx = rand(0 + 50,$base_width - 50);
+        $ry = rand(0 + 50,$base_height - 50);
 
         // put a single waldo on another image
        $success = $waldoGame->place_waldo('/var/www/html/whereswaldo2/images/crowd.jpg', $waldoImg, $waldo_width, $waldo_height, $rx, $ry, $game_id.'.png', '/var/www/html/whereswaldo2/game_images/');
-	   
-	   //Center the position of waldo stored
-	  // $rx += ($waldo_width/2);
-      // $ry += ($waldo_height/2);
 		
-	   $data = ['waldo_x'=>$rx,'waldo_y'=>$ry,'game_id'=>$game_id,'image_path'=>'/var/www/html/whereswaldo2/game_images/','img_type'=>'png','board_width'=>$base_width,'board_height'=>$base_height];
+		$rx += ($waldo_width)/2;
+		$ry += ($waldo_height)/2;
+
+		$data = ['waldo_x'=>$rx,'waldo_y'=>$ry,'game_id'=>$game_id,'image_path'=>'/var/www/html/whereswaldo2/game_images/','img_type'=>'png','board_width'=>$base_width,'board_height'=>$base_height];
 
         $this->mh->insert([$data]);
 

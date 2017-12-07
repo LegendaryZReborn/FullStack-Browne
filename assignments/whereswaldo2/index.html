@@ -25,59 +25,17 @@
     <link href="./css/magnifier.css" rel="stylesheet">
     <style>
         body {
-            background: #ffa600;
+            background: #3399FF;
             font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
             height: 100%;
         }
 
-        /* base game_board classes */
-
         #game_board {
             /* game_board dimension! */
-            height: 650px;
-
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
-
-            /* additional background properties */
-            background-repeat: no-repeat;
-            background-position: center center;
-
-            /* some box shadow for good fun */
-            box-shadow: rgba(0, 0, 0, 0.20) 0 10px 10px;
-
-            background: url('./game_images/crowd.png') no-repeat center center fixed;
-			background-size: contain;
+            height: 640px;
+			width: 1024px;
         }
-
-        /* cover */
-
-        #game_board.flex {
-            /* size matters */
-            background-size: cover;
-        }
-
-        /* contain */
-
-        #game_board.flex {
-            /* size matters */
-            background-size: contain;
-        }
-
-        /* flex, fun */
-
-        #game_board.flex {
-            /* size matters */
-            background-size: 100% auto;
-        }
-
-        .wrapper {
-            width: 800px;
-            margin: 30px auto;
-            color: black;
-            text-align: center;
-        }
-
+		
         h1,
         h2,
         h3 {
@@ -92,13 +50,28 @@
         #mins {
             font-size: 2em;
         }
+		
+		#buttons{
+			width: 170px;
+			margin: auto;
+		}
+		
+		#game{
+			width: 1024px;
+			margin: auto;
+			
+            /* some box shadow for good fun */
+            box-shadow: rgba(0, 0, 0, 0.20) 0 10px 10px;	
+            padding: 0px 0px 0px 0px;
+		}
+		
     </style>
 
 </head>
 
 <body>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -109,65 +82,48 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">Where's Waldo</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-
+				
+            </div>	
+			
+            <div id="navbar" class="navbar-collapse collapse">		
+				<ul class="nav navbar-nav navbar-center">
+                    <li>
+						 <p>
+							<span id="mins">00</span>:
+							<span id="seconds">00</span>:
+							<span id="tens">00</span>
+						 </p>	 
+                    </li>    
+                </ul>			
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a id="nav-start" href="#">Start Game</a>
+                        <a id="nav-start" href="#">Start</a>
                     </li>
                     <li>
-                        <a href="../navbar-static-top/">Static top</a>
+                        <a id="nav-stop" href="#">Stop</a>
                     </li>
                     <li class="active">
-                        <a href="./">Sign Up
+                        <a id="nav-reset" href="#">Reset
                             <span class="sr-only">(current)</span>
                         </a>
-                    </li>
-                    <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Another action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Something else here</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li>
-                                    <a href="#">Separated link</a>
-                                </li>
-                                <li>
-                                    <a href="#">One more separated link</a>
-                                </li>
-                            </ul>
-                        </li>
-                </ul>
+                    </li>  
+                </ul>			
             </div>
             <!--/.nav-collapse -->
         </div>
     </nav>
-    <div id="game_board" class="">
-
+			
+	<div id="game">         
+		<img id="game_board">        
     </div>
-   <div class="wrapper">
-        <p>
-            <span id="mins">00</span>:
-            <span id="seconds">00</span>:
-            <span id="tens">00</span>
-        </p>
-        <button id="button-start">Start</button>
-        <button id="button-stop">Stop</button>
-        <button id="button-reset">Reset</button>
-    </div> 
 
-
+	 <div id="buttons">
+		<button id="button-start">Start</button>
+		<button id="button-stop">Stop</button>
+		<button id="button-reset">Reset</button>
+	</div>
+	
+			
     <!-- Bootstrap core JavaScript -->
     <script src="./js/jquery.min.js"></script>
     <script src="./js/Event.js"></script>
@@ -186,8 +142,7 @@
 					type: 'GET',
 					success: function(data) {
 						console.log(data);
-						$('#game_board').css("background", "url('./game_images/" + data['game_id'] + ".png') no-repeat center center fixed");
-						$('#game_board').css("background-size", "contain");
+						$('#game_board').attr("src", "./game_images/" + data['game_id'] + ".png");
 						game_id = data['game_id'];
 					},
 					data: []
@@ -265,7 +220,7 @@
 			
 			random_waldo_image()
 			
-			 blur($('#game_board'), 5);
+			blur($('#game_board'), 5);
 			 
             $("#game_board").click(function (evt) {
 
@@ -292,27 +247,28 @@
                     dimensions.viewportwidth = window.innerWidth;
                     dimensions.viewportheight = window.innerHeight;
                 }
+				
                 height = $("#game_board").height();
                 width = $("#game_board").width();
+				
                 console.log({ elementWidth: width, elementHeight: height });
 				console.log($(this).offset());
-				var gameboardD= getDimensions($(this));
-				console.log(gameboardD['width']);
 				
-				 var offset = $(this).offset();
+				var gameboardD = getSourceDimensions($(this));
+				
+				var offset = $(this).offset();
 				var xMargin = ($(this).outerWidth() - $(this).width()) / 2;
 				var yMargin = ($(this).outerHeight() - $(this).height()) / 2;
 				
-				console.log(xMargin + " "  + yMargin);
-				console.log(offset);
 				var x = dimensions['clientX'] + xMargin - offset.left;
 				var y = dimensions['clientY'] + yMargin - offset.top;
-				
-				console.log(x + " " + y);
-				var clickX =  (dimensions['clientX'] - offset.left + xMargin)/dimensions['windowWidth'] * gameboardD['width'];
-				var clickY = (dimensions['clientY'] - offset.top + yMargin)/dimensions['windowHeight'] * gameboardD['height'];
-				
-				
+								
+				gameboardD['width'] = gameboardD['width'] > 0 ? gameboardD['width'] : 1247;
+				gameboardD['height'] = gameboardD['height'] > 0 ? gameboardD['height'] : 830;
+
+				var clickX =  (x/width) * gameboardD['width'];
+				var clickY = (y/height) * gameboardD['height'];
+								
 				var data = {
 					'click_x': clickX,
 					'click_y': clickY,
@@ -320,20 +276,16 @@
 				}
 				console.log(dimensions);
 				console.log(data);
+				
 				if(game_id != "")
 					find_distance_from_waldo(data);
 
 
             });
 
-
-           /* $('#game_board').on('click', function () {
-                console.log(getDimensions($(this)));
-            });*/
-
-            var getDimensions = function (item) {
+            var getSourceDimensions = function (item) {
                 var img = new Image();			
-                img.src = item.css('background-image').replace(/url\(|\)$|"/ig, '');
+                img.src = item.attr('src').replace(/url\(|\)$|"/ig, '');
                 return { width: img.width, height: img.height};
             };
 
@@ -348,30 +300,25 @@
             var appendSeconds = document.getElementById("seconds")
             var appendMins = document.getElementById("mins")
             var buttonStart = document.getElementById('button-start');
-			var navStart = document.getElementById('nav-start');
             var buttonStop = document.getElementById('button-stop');
             var buttonReset = document.getElementById('button-reset');
+			var navStart = document.getElementById('nav-start');
+			var navStop = document.getElementById('nav-stop');
+			var navReset = document.getElementById('nav-reset');
             var Interval;
 
-            buttonStart.onclick = function () {
-
+			var start = function (){
                 clearInterval(Interval);
                 Interval = setInterval(startTimer, 10);
-				blur($('#game_board'), 0);
-            }
-		
-			navStart.onclick = function () {
-				clearInterval(Interval);
-                Interval = setInterval(startTimer, 10);
-				blur($('#game_board'), 0);
+				blur($('#game_board'), 0);			
 			}
-
-            buttonStop.onclick = function () {
-                clearInterval(Interval);
-            }
-
-
-            buttonReset.onclick = function () {
+			
+			var stop = function (){
+               clearInterval(Interval);
+				blur($('#game_board'), 5);
+			}
+			
+			var reset = function (){
                 clearInterval(Interval);
                 mins = "00";
                 tens = "00";
@@ -379,11 +326,15 @@
                 appendTens.innerHTML = tens;
                 appendSeconds.innerHTML = seconds;
 				blur($('#game_board'), 5);
-            }
-
-
+            }	
 			
-
+            buttonStart.onclick = start;
+			navStart.onclick = start;
+            buttonStop.onclick = stop;   
+			navStop.onclick = stop;
+            buttonReset.onclick = reset;
+			navReset.onclick = reset;
+     
             function startTimer() {
                 tens++;
 

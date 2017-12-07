@@ -304,10 +304,9 @@ def meme(action):
         _id = client['memes_db']['memes'].insert(doc)
         print(_id)
 
-        if type(_id) is int:
-            return jsonify({"success":True})
-        else:
-            return jsonify({"success":False,"error":"mongo error?"}) 
+       
+        return jsonify({"success":True})
+       
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5050)
